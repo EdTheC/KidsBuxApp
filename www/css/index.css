@@ -1,0 +1,41 @@
+﻿body {
+}
+        .nav-tabs {
+            background-color: #f4511e;
+        }
+
+        .tab-content {
+            background-color: #303136;
+            color: #fff;
+            padding: 5px;
+        }
+
+        .nav-tabs > li > a {
+            border: medium none;
+            color: black;
+        }
+
+        .nav-tabs > li > a:hover {
+            background-color: #303136 !important;
+            border: medium none;
+            border-radius: 0;
+            color: #fff;
+        }
+
+        h2 {
+            color: #f4511e;
+        }
+        h3 {
+            color: #f4511e;
+        }
+        .jumbotron h1 {
+            color: #f4511e;
+            font-weight: bolder;
+            text-shadow: 4px 4px 8px black;
+        }
+        .jumbotron {
+           background-image: url("bg.png");   /* urls are relative to where this CSS is located! */
+     
+           background-size: 100% 100%;
+
+        }

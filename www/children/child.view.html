@@ -1,0 +1,12 @@
+﻿<h1>Hi {{vm.user.username}}!</h1>
+<p>You're logged in!!</p>
+<h3>All registered users:</h3>
+<ul>
+    <li ng-repeat="child in vm.allChildren">
+        {{child.childname}} (${{child.balance}} )
+        - <a href="#" ng-click="vm.deleteChild(child.id)">Delete</a>
+        - <a href="#/child" ng-click="vm.editChild(child.id)">Edit</a>
+    </li>
+</ul>
+<p>&nbsp;</p>
+<p><a href="#/login" class="btn btn-primary">Logout</a></p>
