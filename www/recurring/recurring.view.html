@@ -1,0 +1,28 @@
+﻿<h3>{{vm.childname}}</h3>
+
+<form name="form" ng-submit="vm.recurTransaction()" role="form">
+    <div class="form-group" ng-class="{ 'has-error': form.amount.$dirty && form.amount.$error.required }">
+        <label for="amount">Weekly Allowance</label>
+        <input type="number" step="0.01" name="amount" id="amount" class="form-control" ng-model="vm.transaction.amount" required />
+        <span ng-show="form.amount.$dirty && form.amount.$error.required" class="help-block">Amount is required</span>
+    </div>
+
+    <b>Day to Add Allowance</b>
+    <select class="form-control" id="selDayList" ng-model="vm.selected" ng-change="vm.selDay()">
+        <option ng-repeat="d in vm.daysOfWeek"
+                value="{{d.day}}" ng-selected="vm.selected == d.day">
+            {{d.day}}
+        </option>
+    </select><p>&nbsp;</p>
+
+    <div class="form-actions">
+        <button type="submit" ng-disabled="form.$invalid || vm.dataLoading"  class="btn btn-primary">Add Recurring Allowance</button>
+        <p>&nbsp;</p>
+        <p style="font-size:10px">Enter 0 to remove the recurrence. Note the allowance will start on the NEXT occurence of the day selected.</p>
+        <p>&nbsp;</p>
+        <p style="text-align:center"><a href="#/children">Back to Children</a></p>
+    </div>
+</form>
+
+<p>&nbsp;</p>
+<p><a href="#/login" class="btn btn-primary">Logout</a></p>

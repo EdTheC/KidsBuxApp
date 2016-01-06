@@ -27,12 +27,12 @@
                 if (response.success) {
                     AuthenticationService.SetCredentials(vm.username, vm.password);
                     console.log("setting creds, username=%s", vm.username);
-                    if (vm.username == 'ed' && vm.password == 'ed'){
-                        $location.path('/home');
-                    }
-                    else {
+                    //if (vm.username == 'ed' && vm.password == 'ed'){
+                    //    $location.path('/home');
+                    //}
+                    //else {
                         $location.path('/children');
-                    }
+                    //}
                 } else {
                     var isApperyUser = { test: false };
                     ApperyService.CheckExistingUser(vm.username, vm.password, isApperyUser)

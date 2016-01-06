@@ -47,76 +47,10 @@
                 .then(function (checkit) {
                     if (!isUser.test)
                     {
-                        // appery user?
-                        var isApperyUser = { test: false };
-                        ApperyService.CheckExistingUser(uname, pword, isApperyUser)
-                        .then(function () {
-                            // yes, appery user.
-                            ApperyService.GetAllChildren(uname)
-                            .then (function (children){
-                                // copy all children
-                                vm.AllChildren = children;
-                                for (var i = 0; i < children.length; i++) {
-                                    child.username = uname;
-                                    child.childname = children[i].Child;
-                                    if (children[i].UserID == uname) {              // stupid service gets em all
-                                        // only if child belongs to this user
-                                        ChildrenService.Create(child)
-                                        .then ();
-                                    }
-                                }
-                            })
-                            ApperyService.GetAllTransactions(uname)
-                            .then(function (transactions) {
-                                console.log('transcations length = ' + transactions.length);
-                                    for (var i = 0; i < transactions.length; i++) {
-                                        // copy all transactions for this user transactions
-                                        transaction.username = uname;
-                                        transaction.childname = transactions[i].ChildName;
-                                        transaction.date = transactions[i].Date;
-                                        transaction.amount = transactions[i].Amount;
-                                        transaction.description = transactions[i].For;
-                                        TransactionsService.Create(transaction)
-                                        .then();
-                                    }
-                                    // get balance for each child
-                                    for (var c = 0; c < vm.AllChildren.length; c++) {
-                                        vm.AllChildren[c].Amount = 0;
-                                        for (var i = 0; i < transactions.length; i++) {
-                                            if (transactions[i].ChildName == vm.AllChildren[c].Child) {
-                                                vm.AllChildren[c].Amount += transactions[i].Amount;
-                                            }
-                                        }
-                                    }
-                                    for (var c = 0; c < vm.AllChildren.length; c++) {
-                                        // this is a good time to update the child's balance, so use the Children service to do so
-                                        ChildrenService.GetByUsernameChildname(uname, vm.AllChildren[c].Child)
-                                        .then(function (children) {
-                                            var bal = 0;
-                                            for (var i = 0; i < transactions.length; i++) {
-                                                if (transactions[i].ChildName == children[0].childname) {
-                                                    bal += transactions[i].Amount;
-                                                }
-                                            }
-                                            console.log('then bal = ' + bal );
-
-                                            children[0].balance = bal;
-                                            ChildrenService.Update(children[0])
-                                            .then(function () { })
-                                        })
-                                    }
-
-
-                            })
-
-                             //finally delete the user so this does not happen again
-
-                        })
-
                         //  user does not exist, add in 
                                                                                         
                         console.log("regsiter new user = %s", vm.user.username);
-                        vm.user.referrer = 'Amazon Underground';   // Amazon Googgle Play io.cordova.kidsbux1b00f53567404092b26c288159905c38 Amazon Underground io.appery.project342416 old io.appery.project189621.underground old io.cordova.myapp1b00f53567404092b26c288159905c38
+                        vm.user.referrer = 'Google Play';   // Amazon Googgle Play io.cordova.kidsbux1b00f53567404092b26c288159905c38 Amazon Underground io.appery.project342416 old io.appery.project189621.underground old io.cordova.myapp1b00f53567404092b26c288159905c38
                         UserService.Create(vm.user)
                             .then(function (response) {
                                 // unfortunately while it does work, we get a ETG failure on some browsers.  so we test if the user got added

@@ -97,6 +97,14 @@ angular.module('KidsBux', ['ngRoute',
 		    controller: 'contactController'
 		})
 
+		// route for the recurring transaction page
+		.when('/recurring', {
+		    templateUrl: 'recurring/recurring.view.html',
+		    controller: 'RecurringController',
+		    controllerAs: 'vm'
+
+		})
+
         .otherwise({ redirectTo: '/login' });
 }])
 
