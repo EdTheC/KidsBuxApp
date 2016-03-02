@@ -3,10 +3,10 @@
 
     angular
         .module('KidsBux')
-        .factory('TransactionsService', TransactionsService);
+        .factory('ChoresService', ChoresService);
 
-    TransactionsService.$inject = ['$http', 'Azureservice'];  // not using http, azureservice wraps azure mobile sercice calls. add to app too to propagate
-    function TransactionsService($http, Azureservice) {       //https://github.com/TerryMooreII/angular-azure-mobile-service
+    ChoresService.$inject = ['$http', 'Azureservice'];  // not using http, azureservice wraps azure mobile sercice calls. add to app too to propagate
+    function ChoresService($http, Azureservice) {       //https://github.com/TerryMooreII/angular-azure-mobile-service
         var service = {};
 
         service.GetAll = GetAll;
@@ -20,19 +20,19 @@
         return service;
 
         function GetAll() {
-            return Azureservice.getAll('Transactions')
-                .then(function(items) {
-                    console.log('Query all trans successful');
+            return Azureservice.getAll('Chores')
+                .then(function (items) {
+                    console.log('Query all of chores successful');
                     return items;
-                }, function(err) {
+                }, function (err) {
                     console.error('Azure Error: ' + err);
-                });        
+                });
         }
 
         function GetById(id) {
-            return Azureservice.getById('Transactions', id)
+            return Azureservice.getById('Chores', id)
                 .then(function (item) {
-                    console.log('Query trans id successful');
+                    console.log('Query id of chores successful');
                     return item;
                 }, function (err) {
                     console.error('Azure Error: ' + err);
@@ -40,13 +40,14 @@
         }
 
         function GetByUsername(username) {
-            return Azureservice.query('Transactions', {
+            return Azureservice.query('Chores', {
                 criteria: {
                     username: username
                 }
             })
                 .then(function (items) {
                     // Assigin the results to a $scope variable 
+                    console.log('chores get by user name ' + username + ' returned count= ' + items.length);
                     return items;
 
                 }, function (err) {
@@ -54,19 +55,20 @@
                 });
         }
 
+        // returns all chores for the username + childname
         function GetByUsernameChild(username, childname) {
-            return Azureservice.query('Transactions', {
+            return Azureservice.query('Chores', {
                 criteria: {
                     username: username,
                     childname: childname
                 }, orderBy: [{
-                    column: 'date',
+                    column: '__createdAt',
                     direction: 'desc'
                 }]
             })
                 .then(function (items) {
                     // Assigin the results to a $scope variable 
-                    console.log("transactionservice returns %s transactions for %s %s", items.length, username, childname);
+                    console.log("choresservice returns %s chore(s) for %s %s", items.length, username, childname);
                     return items;
 
                 }, function (err) {
@@ -75,36 +77,38 @@
         }
 
         function Create(transaction) {
-            return Azureservice.insert('Transactions', transaction);  // note transaction will contain the id after this request
-                // unfortunately there is an error angualr about etg headers that can be ignored.
-                //.then(function () {
-                //    console.log('Insert successful');
-                //}, function (err) {
-                //    console.error('Azure Error: ' + err);
-                //});
+            return Azureservice.insert('Chores', transaction);
+            // unfortunately there is an error angualr about etg headers that can be ignored.
+            //.then(function () {
+            //    console.log('Insert successful');
+            //}, function (err) {
+            //    console.error('Azure Error: ' + err);
+            //});
         }
 
-        function Update(transaction) {
-            return Azureservice.update('Transactions',
-                user, 
-                {
-                    criteria: {username : child.username},
-                }
+        function Update(chore) {
+            return Azureservice.update('Chores',
+                chore
+                //{
+                //    id: id,
+                //    lastdate: date,
+                //}
+                )
             .then(function () {
-                console.log('Update trans successful');
+                console.log('Update of chore successful');
             }, function (err) {
                 console.error('Azure Error: ' + err);
-            }));
+            });
         }
 
         function Delete(id) {
-            return Azureservice.del('Transactions',
-                
+            return Azureservice.del('Chores',
+
                 {
-                    id : id
+                    id: id
                 })
             .then(function () {
-                console.log('delete trans successful');
+                console.log('delete of chore successful');
             }, function (err) {
                 console.error('Azure Error: ' + err);
             });

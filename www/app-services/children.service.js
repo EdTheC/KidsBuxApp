@@ -16,13 +16,14 @@
         service.Create = Create;
         service.Update = Update;
         service.Delete = Delete;
+        service.UpdateLastWeekly = UpdateLastWeekly;
 
         return service;
 
         function GetAll() {
             return Azureservice.getAll('Children')
                 .then(function(items) {
-                    console.log('Query successful');
+                    console.log('Query all chilren successful');
                     return items;
                 }, function(err) {
                     console.error('Azure Error: ' + err);
@@ -85,15 +86,21 @@
         }
 
         function Update(child) {
-            return Azureservice.update('Children',
-                child
-                //,
-                //{
-                //    criteria: {username : child.username, childname:child.childname},
-                //}
-                )
+            console.log('children update child=' + JSON.stringify(child));  // note this was crashing in chidren controll (but not elsewhere?) on me yet it appears good. i created specific update(s) as needed
+            return Azureservice.update('Children', child)
             .then(function () {
                 console.log('childservice Update successful');
+            }, function (err) {
+                console.error('Azure Error: ' + err);
+            });
+        }
+        function UpdateLastWeekly(id, date) {
+            return Azureservice.update('Children', {
+                id: id,
+                lastweekly: date,
+            })
+            .then(function () {
+                console.log('childservice Update last weekly successful');
             }, function (err) {
                 console.error('Azure Error: ' + err);
             });
@@ -105,7 +112,7 @@
                     id : id
                 })
             .then(function () {
-                console.log('delete successful');
+                console.log('delete children successful');
             }, function (err) {
                 console.error('Azure Error: ' + err);
             });

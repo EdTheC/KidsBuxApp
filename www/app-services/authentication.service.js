@@ -43,7 +43,8 @@
                     username: username,
                     password : password,
                     authdata: authdata,
-                    currentchild : null
+                    currentchild : null,
+                    currentchore: null,
                 }
 
             };

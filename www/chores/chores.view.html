@@ -1,0 +1,77 @@
+﻿<h3>Add a Chore for {{vm.childname}}</h3>
+<form name="form" ng-submit="vm.addChore()" role="form">
+    <div class="form-group" ng-class="{ 'has-error': form.description.$dirty && form.description.$error.required }">
+        <label for="description">Description</label>
+        <input type="text" name="description" id="description" class="form-control" ng-model="vm.transaction.description" required />
+        <span ng-show="form.description.$dirty && form.description.$error.required" class="help-block">Description is required</span>
+    </div>
+
+    <div class="two-col">
+        <label class="col1">Repeat&nbsp;</label>
+        <select class="col1" id="selRepeatList" ng-model="vm.selected" ng-change="vm.selRepeat()">
+            <option ng-repeat="f in vm.repeat"
+                    value="{{f.frequency}}" ng-selected="vm.selected == f.frequency">
+                {{f.frequency}}
+            </option>
+        </select>
+
+        <div  ng-class="{ 'has-error': form.startdate.$dirty && form.startdate.$error.required }">
+            <input class="col2" type="date" name="startdate" id="startdate" ng-model="vm.transaction.startdate" required />
+            <label class="col2">Start Date&nbsp;</label>
+            <span ng-show="form.startdate.$dirty && form.startdate.$error.required" class="help-block">Date is required</span>
+        </div>
+    </div>
+
+    <p><h3>Rule</h3></p>
+    <div class="two-col" ng-class="{ 'has-error': form.penalty.$dirty && form.penalty.$error.required }" class="col-xs-2">
+        <label class="col1" for="penalty">Penalty $ </label>
+        <input type="number" step="0.01" name="penalty" id="penalty" class="col1" ng-model="vm.transaction.penalty" required />
+        <span ng-show="form.penalty.$dirty && form.penalty.$error.required" class="help-block">Amount is required</span>
+    </div>
+    <!--<b>for missing</b>
+    <div class="form-group" ng-class="{ 'has-error': form.penaltycount.$dirty && form.penaltycount.$error.required }">
+        <input type="number" step="1" name="penaltycount" id="penaltycount" class="form-control" ng-model="vm.transaction.penaltycount" required />
+        <span ng-show="form.penaltycount.$dirty && form.penaltycount.$error.required" class="help-block">Amount is required</span>
+        <b>times per allowance period.</b> 
+
+    </div>-->
+    <p style="font-size:10px">If the chore is not done, the penaly will be subtracted from the balance. The rule will not apply if the penalty is 0.</p>
+
+    <div><label>
+    Assume done 
+    <input type="checkbox" ng-model="vm.asssumeDone" name="assumedone" ng-click="vm.assumeDone=!vm.assumeDone" ng-checked="vm.assumeDone">
+</label></div>
+    <p style="font-size:10px">Leave this checked to save time! Instead of checking off each chore each day (time consuming!), just uncheck the chore(s) not done. Way quicker!</p>
+    <p>&nbsp;</p>
+    <div class="form-actions">
+        <button type="submit" ng-disabled="form.$invalid || vm.dataLoading"  class="btn btn-primary">Add this chore</button>
+        <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        <a href="#/children" class="btn btn-primary">Done</a>
+    </div>
+
+
+</form>
+<div>
+    <h3>List of {{vm.childname}}'s Chores</h3>
+    <table class="table table-striped table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+                <th>Descp</th>
+                <th>Repeat</th>
+                <th>Penalty</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="chore in vm.allChores">
+                <td>{{chore.description}}</td>
+                <td>{{chore.frequency}}</td>
+                <td>${{chore.penalty}}</td>
+                <td><a href="#" ng-click="vm.deleteChore(chore.id)"><i class="fa fa-trash-o"></i></a></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+</div>
+<a href="#/login" class="btn btn-primary">Logout</a>

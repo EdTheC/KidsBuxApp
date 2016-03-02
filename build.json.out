@@ -1,0 +1,11 @@
+﻿{
+    "android": {
+        "release": {
+            "keystore": "kidsbux.jks",
+            "storePassword": "2481632",
+            "alias": "kidsbux_key2",
+            "password": "2481632",
+            "keystoreType": ""
+        }
+    }
+}

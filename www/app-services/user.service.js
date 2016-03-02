@@ -41,6 +41,7 @@
         }
 
         function GetByUsername(username) {
+alert('query username='+username+'=');
             return Azureservice.query('Users', {
                 criteria: {
                     username: username
@@ -48,9 +49,11 @@
             })
                 .then(function (items) {
                     // Assigin the results to a $scope variable 
+                    alert("query username success");
                     return items;
 
                 }, function (err) {
+                    alert('query username FAIL=' + err);
                     console.error('There was an error quering Azure ' + err);
                 });
         }

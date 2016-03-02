@@ -50,7 +50,7 @@
                         //  user does not exist, add in 
                                                                                         
                         console.log("regsiter new user = %s", vm.user.username);
-                        vm.user.referrer = 'Google Play';   // Amazon Googgle Play io.cordova.kidsbux1b00f53567404092b26c288159905c38 Amazon Underground io.appery.project342416 old io.appery.project189621.underground old io.cordova.myapp1b00f53567404092b26c288159905c38
+                        vm.user.referrer = 'Amazon Underground';   // Amazon Googgle Play io.cordova.kidsbux1b00f53567404092b26c288159905c38 Amazon Underground io.appery.project342416 old io.appery.project189621.underground old io.cordova.myapp1b00f53567404092b26c288159905c38
                         UserService.Create(vm.user)
                             .then(function (response) {
                                 // unfortunately while it does work, we get a ETG failure on some browsers.  so we test if the user got added

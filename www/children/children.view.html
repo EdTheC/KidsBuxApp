@@ -10,14 +10,15 @@
         <tr ng-repeat="child in vm.allChildren">
             <td>{{child.childname}}</td>
             <td>${{child.balance}}</td>
-            <td><a href="#" ng-click="vm.transactChild(child.id)"><i class="fa fa-money"></i> <b>+/-</b></a></td>
+            <td><a href="#" ng-click="vm.transactChild(child.id)"><i class="fa fa-usd"></i> <b>+/-</b></a></td>
             <td ng-if="child.weekly!=0 && child.weekly != null"><a href="#" ng-click="vm.recurringTransactions(child.id)"><i class="fa fa-calendar-check-o"></i></a></td>
             <td ng-if="child.weekly==0 || child.weekly == null"><a href="#" ng-click="vm.recurringTransactions(child.id)"><i class="fa fa-calendar-o"></i></a></td>
+            <td><a href="#" ng-click="vm.choreChild(child.childname)"><i class="fa fa-th-list"></i></a></td>
             <td><a href="#" ng-click="vm.deleteChild(child.id)"><i class="fa fa-trash-o"></i></a></td>
         </tr>
     </tbody>
 </table>
-<p style="font-size:10px">Click +/- to add a transaction, click the calendar to setup a recurring allowance, click the trash can to delete that child.</p>
+<p style="font-size:10px">Click +/- to add a transaction, click the calendar to setup a recurring allowance, click the list to handle chores, click the trash can to remove that child.</p>
 <form name="form" ng-submit="vm.addChild()" role="form">
     <div class="form-group" ng-class="{ 'has-error': form.child.$dirty && form.child.$error.required }">
         <label for="childname">Add A Child: Name</label>

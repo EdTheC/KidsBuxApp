@@ -105,6 +105,21 @@ angular.module('KidsBux', ['ngRoute',
 
 		})
 
+		// route for the chores age
+		.when('/chores', {
+		    templateUrl: 'chores/chores.view.html',
+		    controller: 'ChoresController',
+		    controllerAs: 'vm'
+
+		})
+		// route for the choretransactions page
+		.when('/chorestransactions', {
+		    templateUrl: 'chores/chorestransactions.view.html',
+		    controller: 'ChoresTransactionsController',
+		    controllerAs: 'vm'
+
+		})
+
         .otherwise({ redirectTo: '/login' });
 }])
 
@@ -210,4 +225,64 @@ var Base64 = {
         return output;
     }
 };
+/*
+ * Generic date compare using DATES only. 
+ * 
+ * Solves problem of hours, min, secs not being the same for comparison tests
+ * 
+ * Usage:
+ *  datecompare(data1, '===', data2) for equality check,
+ *  datecompare(data1, '>', data2) for greater check,
+ *  !datecompare(data1, '>', data2) for less or equal check
+ * 
+ */
+function datecompare(date1, sign, date2) {
+    var d1 = new Date(date1);
+    var d2 = new Date(date2);
+    var day1 = d1.getDate();
+    var mon1 = d1.getMonth();
+    var year1 = d1.getFullYear();
+    var day2 = d2.getDate();
+    var mon2 = d2.getMonth();
+    var year2 = d2.getFullYear();
+    if (sign === '===') {
+        if (day1 === day2 && mon1 === mon2 && year1 === year2) return true;
+        else return false;
+    }
+    else if (sign === '>') {
+        if (year1 > year2) return true;
+        else if (year1 === year2 && mon1 > mon2) return true;
+        else if (year1 === year2 && mon1 === mon2 && day1 > day2) return true;
+        else return false;
+    }
+};
 
+/*
+ * Sets future dates by the repeat. eg every day, every Monday, etc.
+ *  
+ * returns the days to match interval based on frequency in a moment var
+ *
+ */
+function setInterval(chore) {
+    if (chore.frequency != null) {
+        if (chore.frequency == 'Daily') {
+            return moment(chore.startdate).recur().every(1).day();
+        }
+        else if (chore.frequency == 'Every 2 weeks') {
+            return moment(chore.startdate).recur().every(2).week();
+        }
+        else if (chore.frequency == 'Monthly') {
+            return moment(chore.startdate).recur().every(1).month();
+        }
+        else if (chore.frequency == 'Once') {
+            // TODO 
+            alert('once not handled!');
+        }
+        else {
+            // must be day of week
+            return moment(chore.startdate).recur().every(chore.frequency).dayOfWeek();
+        }
+    }
+    alert('chore frequency ' + chore.frequency + 'not handled');
+    return null;
+};

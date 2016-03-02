@@ -74,7 +74,7 @@
             vm.child.weekly = vm.transaction.amount;
             vm.child.allowanceday = vm.selected;
             ChildrenService.Update(vm.child)
-            .then(function () { return });
+            .then(function () { $location.path('/children'); });
         }
 
         function selDay() {

@@ -5,8 +5,8 @@
         .module('KidsBux')
         .controller('TransactionsController', TransactionsController);
 
-    TransactionsController.$inject = ['$location', 'TransactionsService', 'ChildrenService', '$rootScope', '$scope'];
-    function TransactionsController($location,TransactionsService, ChildrenService, $rootScope, $scope) {
+    TransactionsController.$inject = ['$location', 'TransactionsService', 'ChildrenService', '$rootScope', '$scope', '$timeout'];
+    function TransactionsController($location,TransactionsService, ChildrenService, $rootScope, $scope, $timeout) {
         var vm = this;
 
         vm.user = null;
@@ -15,6 +15,7 @@
         vm.username = $rootScope.globals.currentUser.username;
         vm.childname = $rootScope.globals.currentUser.currentchild;
         vm.addTransaction = addTransaction;
+        vm.viewChoreTransactions = viewChoreTransactions;
 
         vm.defaultForm = {
             description: "",
@@ -28,7 +29,8 @@
             vm.transaction = {
                 description: "",
                 amount: "",
-                date: Date.today()
+                date: Date.today(),
+                ispenalty: 0,
             };
             loadAllTransactions();
             vm.childname = $rootScope.globals.currentUser.currentchild;
@@ -73,6 +75,7 @@
         }
 
         function deleteTransaction(id) {
+            console.log('delete transaction ' + id);
             TransactionsService.GetById(id)
             .then(function (transaction) {
                 if (confirm('Are you sure want to permanently remove ' + transaction.description + '?') == true) {
@@ -88,6 +91,13 @@
             })
         }
 
+        function viewChoreTransactions(id) {
+            $timeout(function () {
+                $location.path('/chorestransactions');
+            });
+        }
+
+
         function addTransaction() {
             var _this = this;
             //console.log("adding transaction for %s deposit=%s", $rootScope.globals.currentUser.currentchild, vm.transaction.deposit);
@@ -97,14 +107,15 @@
             if (this.transaction.deposit == 'false' && this.transaction.amount > 0)
                 this.transaction.amount = -this.transaction.amount;
             TransactionsService.Create(vm.transaction)
-            .then(function (response) {
-                //console.log("addedtransaction");
+            .then(function (response) {  //note: response will have the id
+                console.log('addedtransaction id= ' + response.id + 'response= ' + JSON.stringify(response));
                 loadAllTransactions();  //update the list now.
                 $scope.form.$setPristine();
                 vm.transaction = {
                     description: "",
                     amount: "",
-                    date: Date.today()
+                    date: Date.today(),
+                    ispenalty: 0,
                 };
             }
             );

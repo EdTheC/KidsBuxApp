@@ -22,7 +22,7 @@
         <!--<button type="submit"ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary" ng-click="vm.subTransaction()">Withdraw</button>-->
         <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary" ng-click="vm.transaction.deposit='false'">Withdraw</button>
         <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-        <p style="text-align:center"><a href="#/children">Back to Children</a></p>
+        <a href="#/children" class="btn btn-primary">Done</a>
     </div>
 </form>
 <div >
@@ -40,11 +40,12 @@
                 <td>{{transaction.date}}</td>
                 <td>{{transaction.description}}</td>
                 <td>${{transaction.formattedamount}}</td>
-                <td><a href="#" ng-click="vm.deleteTransaction(transaction.id)"><i class="fa fa-trash-o"></i></a></td>
+                <td ng-if="transaction.ispenalty==null || transaction.ispenalty==0"><a href="#" ng-click="vm.deleteTransaction(transaction.id)"><i class="fa fa-trash-o"></i></a></td>
+                <td ng-if="transaction.ispenalty==1"><a href="#" ng-click="vm.viewChoreTransactions(transaction.id)"><i class="fa fa-th-list"></i></a></td>
             </tr>
         </tbody>
     </table>
 
 
 </div>
-<p>&nbsp;</p>
+<a href="#/login" class="btn btn-primary">Logout</a>
